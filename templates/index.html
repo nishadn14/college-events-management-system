@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block content %}
+<h1>What's happening on campus</h1>
+<form class="filters" method="get">
+<input name="q" value="{{ q }}" placeholder="Search by title or venue" aria-label="Search events">
+<select name="category" aria-label="Category"><option value="">All categories</option>
+{% for c in categories %}<option {{ 'selected' if c==cat }}>{{ c }}</option>{% endfor %}</select>
+<button class="btn">Search</button></form>
+<div class="list">
+{% for e in events %}
+<a class="ev" href="{{ url_for('event', eid=e.id) }}">
+<div class="date"><div class="d">{{ e.date[8:10] }}</div><div class="m">{{ ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][e.date[5:7]|int] }}</div></div>
+<div><h3>{{ e.title }}</h3><span class="tag">{{ e.category }}</span><span class="meta">{{ e.time }} at {{ e.venue }}</span></div>
+<div class="seats {{ 'full' if e.taken>=e.capacity }}">{% if e.taken>=e.capacity %}Full{% else %}{{ e.capacity-e.taken }} seats left{% endif %}</div></a>
+{% else %}<p class="empty">No events match your search. Try clearing the filters.</p>{% endfor %}
+</div>{% endblock %}

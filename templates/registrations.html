@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<div class="row" style="justify-content:space-between;align-items:center"><h1>{{ e.title }}</h1>
+<a class="btn" href="{{ url_for('export', eid=e.id) }}">Download CSV</a></div>
+<div class="scroll"><table><tr><th>Name</th><th>Email</th><th>Roll no</th><th>Department</th><th></th></tr>
+{% for r in rows %}<tr><td>{{ r.name }}</td><td>{{ r.email }}</td><td>{{ r.roll_no }}</td><td>{{ r.department }}</td>
+<td><form method="post" action="{{ url_for('delete_reg', rid=r.id) }}"><button class="btn danger small">Remove</button></form></td></tr>
+{% else %}<tr><td colspan="5" class="empty">No one has registered yet.</td></tr>{% endfor %}</table></div>
+<p><a href="{{ url_for('admin') }}">Back to events</a></p>{% endblock %}

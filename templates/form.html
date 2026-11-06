@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<div class="panel" style="max-width:560px"><h2>{{ 'Edit event' if e else 'Add event' }}</h2>
+<form method="post">
+<label for="t">Title</label><input id="t" name="title" value="{{ e.title if e }}" required>
+<label for="c">Category</label><select id="c" name="category">{% for c in categories %}<option {{ 'selected' if e and e.category==c }}>{{ c }}</option>{% endfor %}</select>
+<label for="d">Date</label><input id="d" name="date" type="date" value="{{ e.date if e }}" required>
+<label for="tm">Time</label><input id="tm" name="time" type="time" value="{{ e.time if e }}" required>
+<label for="v">Venue</label><input id="v" name="venue" value="{{ e.venue if e }}" required>
+<label for="cp">Capacity</label><input id="cp" name="capacity" type="number" min="1" value="{{ e.capacity if e else 100 }}" required>
+<label for="ds">Description</label><textarea id="ds" name="description" rows="5">{{ e.description if e }}</textarea>
+<p class="row"><button class="btn">Save event</button><a class="btn ghost" href="{{ url_for('admin') }}">Cancel</a></p></form></div>{% endblock %}

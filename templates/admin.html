@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<div class="row" style="justify-content:space-between;align-items:center"><h1>Manage events</h1>
+<a class="btn" href="{{ url_for('edit_event') }}">Add event</a></div>
+<div class="scroll"><table><tr><th>Event</th><th>Date</th><th>Registered</th><th></th></tr>
+{% for e in events %}<tr><td>{{ e.title }}</td><td>{{ e.date }}</td><td>{{ e.taken }} / {{ e.capacity }}</td>
+<td class="row"><a class="btn ghost small" href="{{ url_for('registrations', eid=e.id) }}">Registrations</a>
+<a class="btn ghost small" href="{{ url_for('edit_event', eid=e.id) }}">Edit</a>
+<form method="post" action="{{ url_for('delete_event', eid=e.id) }}" onsubmit="return confirm('Delete this event and its registrations?')"><button class="btn danger small">Delete</button></form></td></tr>
+{% else %}<tr><td colspan="4" class="empty">No events yet. Add your first event.</td></tr>{% endfor %}</table></div>{% endblock %}
